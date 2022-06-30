@@ -16,6 +16,6 @@ git add -A
 
 git commit -m 'deploy'
 
-git push -f git@github.com:saitonajumi/guidance-system.git main:gh-pages
+git push -f git@github.com:saitonajumi/guidance-system.git main:main
 
 cd -
