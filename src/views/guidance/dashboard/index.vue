@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>Dashboard</span>
+        <span>{{ this.$route.name }}</span>
         <el-dropdown style="margin-left: 1%; float: right;" @command="exportData">
           <el-button
             size="medium"

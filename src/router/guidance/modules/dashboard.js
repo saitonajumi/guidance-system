@@ -3,7 +3,7 @@ import Dashboard from '@/views/guidance/dashboard'
 const router = [
   {
     path: '/',
-    name: 'guidance DASHBOARD',
+    name: 'Dashboard',
     component: Layout,
     redirect: '/dashboard',
     children: [{

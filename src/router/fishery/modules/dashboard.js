@@ -5,7 +5,7 @@ const router = [
   {
     path: '/',
     component: Layout,
-    name: 'fishery DASHBOARD',
+    name: 'Dashboard',
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
