@@ -12,6 +12,10 @@ query (
     registration_type : $registration_type
     status: $status
   ) {
+    success
+    message
     data
+    paginator_info
+    filter
   }
 }
