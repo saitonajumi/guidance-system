@@ -86,15 +86,13 @@ export default {
       })
     },
     handleLogin() {
-      console.clear()
       this.$refs.loginForm.validate(valid => {
-        console.log('valid', valid)
         if (valid) {
           this.loading = true
-          console.log('this.loginForm', this.loginForm)
           login(this.loginForm, (response) => {
             if (response.login) {
-              console.log('changing path')
+              localStorage.setItem('access_token', response.login.access_token)
+              localStorage.setItem('user', JSON.stringify(response.login.user))
               this.$router.push({ path: '/' })
             } else {
               this.$message({
