@@ -1,0 +1,17 @@
+query (
+  $first: Int
+  $page: Int
+  $student: String
+  $registration_type : String
+  $status: String
+){
+  allUsers (
+    first: $first
+    page: $page
+    student: $student
+    registration_type : $registration_type
+    status: $status
+  ) {
+    data
+  }
+}

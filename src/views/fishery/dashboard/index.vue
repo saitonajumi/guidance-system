@@ -1,18 +1,23 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">name: {{ currentUser.name }}</div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
+  data() {
+    return {
+      currentUser: JSON.parse(localStorage.getItem('user')),
+      query: {
+        first: 10,
+        page: 1,
+        student: '',
+        registration_type: '',
+        status: ''
+      }
+    }
   }
 }
 </script>

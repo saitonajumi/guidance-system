@@ -5,14 +5,40 @@
 </template>
 
 <script>
+import AllUsers from '@/graphql/users'
 export default {
   name: 'Dashboard',
   data() {
     return {
-      currentUser: JSON.parse(localStorage.getItem('user'))
+      currentUser: JSON.parse(localStorage.getItem('user')),
+      query: {
+        first: 10,
+        page: 1,
+        student: '',
+        registration_type: '',
+        status: ''
+      }
     }
   },
-  mounted() {}
+  mounted() {
+    this.get(0)
+  },
+  methods: {
+    get() {
+      AllUsers(this.query, (response, success) => {
+        if (success) {
+          const data = response.allUsers.data
+          console.log('allUsers', data)
+        } else {
+          this.$message({
+            message: `Unable to retrieve the data.`,
+            dangerouslyUseHTMLString: true,
+            type: 'error'
+          })
+        }
+      })
+    }
+  }
 }
 </script>
 

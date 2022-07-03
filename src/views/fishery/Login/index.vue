@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">FISHERY Login Form</h3>
+        <h3 class="title">fish Login Form</h3>
       </div>
 
       <el-form-item prop="username">
@@ -47,33 +47,19 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { login } from '@/graphql/auth'
 
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur' }],
+        password: [{ required: true, trigger: 'blur' }]
       },
       loading: false,
       passwordType: 'password',
@@ -103,14 +89,22 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
+          login(this.loginForm, (response) => {
+            if (response.login) {
+              localStorage.setItem('access_token', response.login.access_token)
+              localStorage.setItem('user', JSON.stringify(response.login.user))
+              this.$router.push({ path: '/' })
+            } else {
+              this.$message({
+                message: `Invalid user credentials.`,
+                dangerouslyUseHTMLString: true,
+                type: 'error'
+              })
+            }
           })
+          this.loading = false
         } else {
-          console.log('error submit!!')
+          this.loading = false
           return false
         }
       })
