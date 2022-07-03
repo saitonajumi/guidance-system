@@ -26,8 +26,9 @@
           Add New Record
         </el-button>
         <div style="float: right;">
-          <el-input size="medium" placeholder="search here" v-model="searchValue" class="input-with-select">
+          <el-input size="medium" placeholder="search here" v-model="searchValue" class="input-with-select" @keyup.enter.native="handleSearch">
             <el-button
+              @click="handleSearch"
               size="medium"
               style="background-color: #409EFF; color: white"
               slot="append"
@@ -84,10 +85,10 @@
         <el-table-column
           label="Actions"
           width="150">
-          <template slot-scope="">
+          <template slot-scope="{row}">
             <span>
               <el-button type="primary" icon="el-icon-edit" circle></el-button>
-              <el-button type="danger" icon="el-icon-delete" circle></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle @click="openDeleteQuestion(row)"></el-button>
             </span>
           </template>
         </el-table-column>
@@ -107,7 +108,8 @@
 <script>
 import Pagination from '@/components/Pagination'
 import {
-  allUsers
+  allUsers,
+  deleteUser
 } from '@/graphql/users/'
 export default {
   name: 'Dashboard',
@@ -134,23 +136,27 @@ export default {
   mounted() {
     this.get()
   },
+  watch: {
+    searchValue: function() {
+      if (this.searchValue === '') {
+        this.handleSearch()
+      }
+    }
+  },
   methods: {
-    resetData() {
-      this.total = 0
-      this.allUsersData = []
-    },
     get() {
-      this.resetData()
+      this.tableLoading = true
+      this.allUsersData = []
       allUsers(this.query, (response, success) => {
         if (success) {
           const data = response.allUsers.data
           this.total = response.allUsers.paginator_info.total
           if (data.length > 0) {
             this.allUsersData = data
+            this.tableLoading = false
           }
-          console.log('allUsers', data)
         } else {
-          console.log(response.message)
+          this.tableLoading = false
           this.$message({
             message: `Unable to retrieve the data.`,
             dangerouslyUseHTMLString: true,
@@ -159,12 +165,39 @@ export default {
         }
       })
     },
+    handleSearch() {
+      this.query.page = 1
+      this.query.student = this.searchValue
+      this.get()
+    },
     indexMethod(index) {
       return (index + 1) + ((this.query.page - 1) * this.query.first)
     },
-    exportData(type) {
-      console.log('asfaf', type)
-    }
+    openDeleteQuestion(data) {
+      this.$confirm('This will permanently delete the record. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        deleteUser({ id: data.id }, (response, success) => {
+          if (success) {
+            this.$message({
+              type: 'success',
+              message: response.deleteUser.message
+            })
+            this.get()
+          } else {
+            this.$message({
+              message: `Unable to retrieve the data.`,
+              dangerouslyUseHTMLString: true,
+              type: 'error'
+            })
+          }
+        })
+      })
+    },
+    exportData(type) {}
   }
 }
 </script>
