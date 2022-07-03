@@ -1,0 +1,19 @@
+$primary: #ff7518;
+$secondaryText: #FFF;
+$hover: #698bd0;
+$update: #409EFF;
+$danger: #BE2421;
+$paginator: #7c96a6;
+$cancel: transparent;
+
+$--color-primary: $primary;
+
+:export {
+  primary: $primary;
+  secondaryText: $secondaryText;
+  hover: $hover;
+  update: $update;
+  danger: $danger;
+  paginator: $paginator;
+  cancel: $cancel;
+}

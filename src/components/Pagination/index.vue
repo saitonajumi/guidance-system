@@ -78,9 +78,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .pagination-container {
-  background: #fff;
+  background: white;
   margin-top: 0;
   padding: 16px 16px;
   float: left;

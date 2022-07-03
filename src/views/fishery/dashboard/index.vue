@@ -6,8 +6,7 @@
         <el-dropdown style="margin-left: 1%; float: right;" @command="exportData">
           <el-button
             size="medium"
-            class="filter-item defaultColor"
-            type="primary"
+            class="filter-item"
             icon="el-icon-download"
             :loading="printLoading">
             Export as<i class="el-icon-arrow-down el-icon--right"></i>
@@ -18,24 +17,26 @@
           </el-dropdown-menu>
         </el-dropdown>
         <el-button
-          class="defaultColor"
           style="margin-left: 1%; float: right;"
           size="medium"
-          type="primary"
           icon="el-icon-plus"
           @click="addNewRecord">
           Add New Record
         </el-button>
         <div style="float: right;">
-          <el-input size="medium" placeholder="search here" v-model="searchValue" class="input-with-select" @keyup.enter.native="handleSearch">
-            <el-button
-              @click="handleSearch"
-              size="medium"
-              style="background-color: #409EFF; color: white"
-              slot="append"
-              icon="el-icon-search">Search
-            </el-button>
-          </el-input>
+          <el-row>
+            <el-col :span="16"><div class="grid-content bg-purple">
+              <el-input size="medium" placeholder="search here" v-model="searchValue" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
+            </div></el-col>
+            <el-col :span="4"><div class="grid-content bg-purple-light">
+              <el-button
+                @click="handleSearch"
+                size="medium"
+                slot="append"
+                icon="el-icon-search">Search
+              </el-button>
+            </div></el-col>
+          </el-row>
         </div>
       </div>
       <pagination
@@ -45,7 +46,7 @@
         :limit.sync="query.first"
         @pagination="get"/>
       <el-table
-        :header-cell-style="{ background: '#409EFF', color: 'white' }"
+        :header-cell-style="{ background: '#7c96a6', color: 'white' }"
         style="width: 100%"
         stripe
         border
@@ -62,14 +63,18 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="name"
           label="Name"
           width="auto">
+          <template slot-scope="{row}">
+            {{ row.name }}
+          </template>
         </el-table-column>
         <el-table-column
-          prop="email"
           label="Email"
           width="auto">
+          <template slot-scope="{row}">
+            {{ row.email }}
+          </template>
         </el-table-column>
         <el-table-column
           label="Status"
@@ -88,8 +93,8 @@
           width="150">
           <template slot-scope="{row}">
             <span>
-              <el-button type="primary" icon="el-icon-edit" circle @click="updateRecord(row)"></el-button>
-              <el-button type="danger" icon="el-icon-delete" circle @click="openDeleteQuestion(row)"></el-button>
+              <el-button class="btn-update" icon="el-icon-edit" circle @click="updateRecord(row)"></el-button>
+              <el-button class="btn-danger" icon="el-icon-delete" circle @click="openDeleteQuestion(row)"></el-button>
             </span>
           </template>
         </el-table-column>
@@ -230,9 +235,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.defaultColor {
-  background: #409EFF;
-  color: white;
+.el-table {
+  &__header-cell-style {
+    text-align: start;
+    background-color: $primary;
+  }
 }
 .dashboard {
   &-container {
@@ -242,5 +249,11 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.btn-danger {
+  background-color: $danger;
+}
+.btn-update {
+  background-color: $update;
 }
 </style>

@@ -1,14 +1,27 @@
 <template>
   <el-dialog
+    width="33%"
     :title="textMap[formType]"
     :visible="formVisible"
     :before-close="exitForm"
     :destroy-on-close="true"
     :close-on-click-modal="false">
-    <span>This is a message</span>
+    <el-form
+      v-loading="loading"
+      ref="dataForm"
+      :rules="rules"
+      :model="dataForm"
+      label-position="top">
+      <el-form-item label="Name">
+        <el-input v-model="dataForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="Email">
+        <el-input v-model="dataForm.email"></el-input>
+      </el-form-item>
+    </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button size="medium" @click="formVisible = false">CANCEL</el-button>
-      <el-button size="medium" type="primary" @click="formVisible = false">SAVE</el-button>
+      <el-button class="cancel" size="medium" @click="formVisible = false">CANCEL</el-button>
+      <el-button size="medium" @click="onSubmit">SAVE</el-button>
     </span>
   </el-dialog>
 </template>
@@ -35,14 +48,20 @@ export default {
   },
   data() {
     return {
+      loading: true,
       titleForm: 'User',
       textMap: {
         add: '',
         edit: ''
       },
       dataForm: {
-        id: undefined
-      }
+        id: undefined,
+        name: '',
+        email: '',
+        created_by: '',
+        updated_by: ''
+      },
+      rules: {}
     }
   },
   mounted() {
@@ -52,13 +71,14 @@ export default {
   methods: {
     handleCreate() {
       console.log('handleUpdate')
+      this.loading = false
     },
     handleUpdate(row) {
       console.log('handleUpdate', row)
+      this.loading = false
     },
-    resetModel() {
-
-    },
+    onSubmit() {},
+    resetModel() {},
     exitForm() {
       this.resetModel()
       this.$emit('formVisible')
@@ -70,6 +90,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.cancel {
+  background-color: $cancel;
+  color: gray;
+}
 </style>

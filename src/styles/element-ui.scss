@@ -47,3 +47,37 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-dialog {
+  //border-radius: 10px;
+  &__header {
+    text-align: start;
+    background-color: $primary;
+    //border-top-right-radius: 10px;
+    //border-top-left-radius: 10px;
+  }
+  &__title {
+    color: $secondaryText !important;
+  }
+  &__body {
+    text-align: center;
+    .el-form {
+      text-align: left;
+    }
+  }
+}
+.el-button {
+  background-color: $primary;
+  color: white;
+}
+.el-button:hover {
+  background-color: $primary;
+  color: white;
+}
+
+.el-table {
+  &__header-cell-style {
+    text-align: start;
+    background-color: $primary;
+  }
+}
