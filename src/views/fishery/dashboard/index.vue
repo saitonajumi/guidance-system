@@ -22,7 +22,8 @@
           style="margin-left: 1%; float: right;"
           size="medium"
           type="primary"
-          icon="el-icon-plus">
+          icon="el-icon-plus"
+          @click="addNewRecord">
           Add New Record
         </el-button>
         <div style="float: right;">
@@ -87,7 +88,7 @@
           width="150">
           <template slot-scope="{row}">
             <span>
-              <el-button type="primary" icon="el-icon-edit" circle></el-button>
+              <el-button type="primary" icon="el-icon-edit" circle @click="updateRecord(row)"></el-button>
               <el-button type="danger" icon="el-icon-delete" circle @click="openDeleteQuestion(row)"></el-button>
             </span>
           </template>
@@ -102,11 +103,18 @@
           @pagination="get"/>
       </div>
     </el-card>
+    <call-out-form
+      @formSuccess="get"
+      :formVisible="formVisible"
+      :formTypes="formTypes"
+      :formType="formType"
+      :formData="formData"/>
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination'
+import CallOutForm from '@/views/guidance/dashboard/Form'
 import {
   allUsers,
   deleteUser
@@ -114,10 +122,18 @@ import {
 export default {
   name: 'Dashboard',
   components: {
-    Pagination
+    Pagination,
+    CallOutForm
   },
   data() {
     return {
+      formTypes: {
+        add: 'add',
+        edit: 'edit'
+      },
+      formType: '',
+      formData: {},
+      formVisible: false,
       tableLoading: false,
       printLoading: false,
       searchValue: '',
@@ -145,6 +161,7 @@ export default {
   },
   methods: {
     get() {
+      this.formVisible = false
       this.tableLoading = true
       this.allUsersData = []
       allUsers(this.query, (response, success) => {
@@ -196,6 +213,16 @@ export default {
           }
         })
       })
+    },
+    addNewRecord() {
+      this.formVisible = true
+      this.formType = this.formTypes.add
+      this.formData = {}
+    },
+    updateRecord(row) {
+      this.formVisible = true
+      this.formType = this.formTypes.edit
+      this.formData = row
     },
     exportData(type) {}
   }
