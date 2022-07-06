@@ -5,18 +5,20 @@
     :visible="formVisible"
     :before-close="exitForm"
     :destroy-on-close="true"
-    :close-on-click-modal="false">
+    :close-on-click-modal="false"
+  >
     <el-form
-      v-loading="loading"
       ref="dataForm"
+      v-loading="loading"
       :rules="rules"
       :model="dataForm"
-      label-position="top">
+      label-position="top"
+    >
       <el-form-item label="Name">
-        <el-input v-model="dataForm.name"></el-input>
+        <el-input v-model="dataForm.name" />
       </el-form-item>
       <el-form-item label="Email">
-        <el-input v-model="dataForm.email"></el-input>
+        <el-input v-model="dataForm.email" />
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -24,6 +26,7 @@
       <el-button size="medium" @click="onSubmit">SAVE</el-button>
     </span>
   </el-dialog>
+
 </template>
 
 <script>
@@ -35,17 +38,6 @@ export default {
     'formType',
     'formData'
   ],
-  watch: {
-    formVisible: function() {
-      if (this.formTypes) {
-        if (this.formType === this.formTypes.add) {
-          this.handleCreate()
-        } else if (this.formType === this.formTypes.edit) {
-          this.handleUpdate(this.formData)
-        }
-      }
-    }
-  },
   data() {
     return {
       loading: true,
@@ -62,6 +54,17 @@ export default {
         updated_by: ''
       },
       rules: {}
+    }
+  },
+  watch: {
+    formVisible: function() {
+      if (this.formTypes) {
+        if (this.formType === this.formTypes.add) {
+          this.handleCreate()
+        } else if (this.formType === this.formTypes.edit) {
+          this.handleUpdate(this.formData)
+        }
+      }
     }
   },
   mounted() {
@@ -94,5 +97,6 @@ export default {
 .cancel {
   background-color: $cancel;
   color: gray;
+
 }
 </style>

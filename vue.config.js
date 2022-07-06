@@ -1,8 +1,8 @@
 'use strict'
 const clientTheme = process.env.VUE_APP_CLIENT
+const gql = process.env.VUE_APP_GRAPHQL_HTTP
 const variables = `@import "@/styles/variables.scss";`
 const theme = `@import "@/styles/${clientTheme}/client-themes.scss";`
-console.log('theme', theme)
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
@@ -12,5 +12,8 @@ module.exports = {
         prependData: theme + variables
       }
     }
+  },
+  devServer: {
+    proxy: gql,
   }
 }
