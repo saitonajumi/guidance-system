@@ -4,7 +4,7 @@
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
-    "instal": "npm run install",
+    "install": "npm run install",
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
     "lint": "eslint --ext .js,.vue src"
