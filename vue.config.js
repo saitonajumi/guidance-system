@@ -14,6 +14,6 @@ module.exports = {
     }
   },
   devServer: {
-    proxy: gql,
+    proxy: gql
   }
 }

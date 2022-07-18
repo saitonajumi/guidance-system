@@ -18,19 +18,19 @@ import store from '@/store'
  * @param willReturnExcel
  * @param customName
  */
-export function exportExcel (name, headers, columns, data, type, willReturnExcel, customName = false) {
-  let collection = formatJson(columns, data)
+export function exportExcel(name, headers, columns, data, type, willReturnExcel, customName = false) {
+  const collection = formatJson(columns, data)
 
   let fileName = typeof name === 'object' ? name.title : name
   if (!customName) {
     fileName = 'List_of_' + fileName.split('-').map(o => o.charAt(0).toUpperCase() + o.slice(1)).join('_') + '_' + moment().format('MM_DD_YYYY')
     fileName = fileName.split(' ').join('_')
   } else {
-    let customFileName = fileName.replace(/ /g, '_')
+    const customFileName = fileName.replace(/ /g, '_')
     fileName = customFileName + '_' + moment().format('MM_DD_YYYY')
   }
 
-  let file = exportJsonToExcel({
+  const file = exportJsonToExcel({
     header: headers,
     data: collection,
     filename: fileName,
@@ -44,7 +44,7 @@ export function exportExcel (name, headers, columns, data, type, willReturnExcel
   }
 }
 
-export function formatJson (filterVal, jsonData) {
+export function formatJson(filterVal, jsonData) {
   return jsonData.map(v => filterVal.map(j => {
     if (j === 'timestamp') {
       return parseTime(v[j])
@@ -66,8 +66,8 @@ export function formatJson (filterVal, jsonData) {
  * @param cellStyles
  * @param customFileName
  */
-export function exportPDF (name, columns, columnData, willReturnPDF = false, customHeader = false, columnStyles = null, cellStyles = null, customFileName = false) {
-  let table = generateTable(name, columns, columnData, willReturnPDF, customHeader, columnStyles, cellStyles, customFileName)
+export function exportPDF(name, columns, columnData, willReturnPDF = false, customHeader = false, columnStyles = null, cellStyles = null, customFileName = false) {
+  const table = generateTable(name, columns, columnData, willReturnPDF, customHeader, columnStyles, cellStyles, customFileName)
   if (willReturnPDF) {
     return { file: table.url, fileName: table.pdfName }
   } else {
@@ -91,7 +91,7 @@ export function exportPDF (name, columns, columnData, willReturnPDF = false, cus
  * @param properties
  */
 
-export function print (type, title = '', data = [], properties = {}) {
+export function print(type, title = '', data = [], properties = {}) {
   if (type === 'json') {
     printJS({
       type: 'json',
@@ -109,7 +109,7 @@ export function print (type, title = '', data = [], properties = {}) {
     const column = properties.map(property => property.displayName)
     const columnData = data.map(elem => Object.values(elem))
 
-    let table = generateTable(title, column, columnData)
+    const table = generateTable(title, column, columnData)
     printJS(table.url, type)
   }
 }
@@ -128,16 +128,16 @@ export function print (type, title = '', data = [], properties = {}) {
  * @param customFileName
  * @returns {{pdfName: *, url: *}}
  */
-function generateTable (name, columns, columnData, willReturnPDF = false, customHeader = false, columnStyles = null, cellStyles = null, customFileName = false) {
+function generateTable(name, columns, columnData, willReturnPDF = false, customHeader = false, columnStyles = null, cellStyles = null, customFileName = false) {
   // let client = process.env.VUE_APP_CLIENT
-  let clientTemplate = process.env.VUE_APP_CLIENT_TEMPLATE
+  const clientTemplate = process.env.VUE_APP_CLIENT
 
-  let logo = require('@/assets/' + clientTemplate + '/logo.png')
-  let imgLogo = new Image()
+  const logo = require('@/assets/' + clientTemplate + '/logo.png')
+  const imgLogo = new Image()
   imgLogo.src = logo
 
-  let doc = new JSPDF()
-  let totalPagesExp = '{total_pages_count_string}'
+  const doc = new JSPDF()
+  const totalPagesExp = '{total_pages_count_string}'
 
   var pdfName, header, splitHeader, subHeader
   if (name && typeof name === 'object') {
@@ -173,15 +173,15 @@ function generateTable (name, columns, columnData, willReturnPDF = false, custom
   // if (columnData.length < 10) {
   //   setWidth = 160
   // }
-  let numberOfRecords = 'Number of Records Found: ' + columnData.length.toString()
-  let numberOfRecordsOffset = doc.getTextWidth(numberOfRecords)
+  const numberOfRecords = 'Number of Records Found: ' + columnData.length.toString()
+  const numberOfRecordsOffset = doc.getTextWidth(numberOfRecords)
   doc.text(numberOfRecords, doc.internal.pageSize.width - (numberOfRecordsOffset + 10), 57 + additionalTopMargin)
 
   doc.autoTable(columns, columnData, {
     title: pdfName,
     margin: { top: 60 + additionalTopMargin, left: 10, right: 10 },
     theme: 'grid',
-    didDrawPage: function (data) {
+    didDrawPage: function(data) {
       doc.addImage(imgLogo, 'PNG', data.settings.margin.left, 10, 75, 15)
       doc.line(data.settings.margin.left, 25, 195, 25)
       // doc.text('Date: ' + moment().format('MM/DD/YYYY'), 167, 30)
@@ -213,7 +213,7 @@ function generateTable (name, columns, columnData, willReturnPDF = false, custom
         doc.setFontSize(10)
         doc.setTextColor(40)
 
-        let topOffset = 50
+        const topOffset = 50
         var subHeaderTextWidth = doc.getTextWidth(subHeader)
         var subHeaderTextOffset = (doc.internal.pageSize.width - subHeaderTextWidth) / 2
 
@@ -236,7 +236,7 @@ function generateTable (name, columns, columnData, willReturnPDF = false, custom
       doc.text(`Generated by: ${store.getters.email} on ${moment().format('MM/DD/YYYY')} ${time}`, data.settings.margin.left, pageHeight - 10)
       doc.text(str, doc.internal.pageSize.width - (data.settings.margin.left + 16), pageHeight - 10)
     },
-    didParseCell ({ doc, cell, column }) {
+    didParseCell({ doc, cell, column }) {
       if (cell === undefined) {
         return
       }
@@ -297,7 +297,7 @@ function generateTable (name, columns, columnData, willReturnPDF = false, custom
       textColor: variables.headerText,
       halign: 'center'
     },
-    columnStyles: columnStyles != null ? columnStyles : { 0: { halign: 'center', cellWidth: '100%', cellPadding: 0 } }
+    columnStyles: columnStyles != null ? columnStyles : { 0: { halign: 'center', cellWidth: '100%', cellPadding: 0 }}
   })
 
   if (typeof doc.putTotalPages === 'function') {

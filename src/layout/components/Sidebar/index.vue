@@ -1,6 +1,11 @@
 <template>
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
+    <el-image v-if="clientCheck === 'fishery'" :src="logo" style="background-color: white" />
+    <div v-if="clientCheck === 'guidance'" style="background-color: white; text-align: center">
+      <el-image :src="logo" style="background-color: white; width: 50%" />
+    </div>
+    <!--    <el-image  :src="logo" style="background-color: white; width: 30%" />-->
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
@@ -26,6 +31,14 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    const checkLogo = process.env.VUE_APP_CLIENT
+    const clientCheck = process.env.VUE_APP_CLIENT
+    return {
+      logo: require('@/assets/' + checkLogo + '/logo.png'),
+      clientCheck: clientCheck
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar'
@@ -51,6 +64,7 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
-  }
+  },
+  mounted() {}
 }
 </script>

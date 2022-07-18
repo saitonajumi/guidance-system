@@ -1,68 +1,50 @@
 <template>
   <div class="login-container">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      auto-complete="on"
-      label-position="left"
-    >
-      <el-card class="box-card">
-        <div class="title-container">
-          <div class="logo" style="text-align: center">
-            <img width="60%" src="@/assets/guidance/logo.png">
-            <h1>LOGIN</h1>
-          </div>
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+      <div class="title-container">
+        <div class="logo">
+          <img width="100%" src="@/assets/fishery/fishery.png">
         </div>
-        <el-form-item prop="username">
-          <span class="svg-container">
-            <svg-icon icon-class="user" />
-          </span>
-          <el-input
-            ref="username"
-            v-model="loginForm.username"
-            placeholder="Username"
-            name="username"
-            type="text"
-            tabindex="1"
-            auto-complete="on"
-          />
-        </el-form-item>
+      </div>
 
-        <el-form-item prop="password">
-          <span class="svg-container">
-            <svg-icon icon-class="password" />
-          </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Password"
-            name="password"
-            tabindex="2"
-            auto-complete="on"
-            @keyup.enter.native="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
-        </el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-        <span>
-          <el-link href="/register" style="float: left">Create new account</el-link>
-          <el-link style="float: right">Forgot password</el-link>
+      <el-form-item prop="username">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
         </span>
-        <div style="margin-top: 20%; font-size: 14px">
-          <div>Republic of the Philippines</div>
-          <div style="font-weight: bold">OCCIDENTAL MINDORO STATE COLLEGE</div>
-          <div>Sablayan, Occidental Mindoro</div>
-          <div>Website: www.omsc.edu.ph</div>
-          <div>Email address: omsc_9747@yahoo.com</div>
-          <div>Tele/Fax: (043) 457-0231</div>
-        </div>
-      </el-card>
+        <el-input
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="Username"
+          name="username"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+
+      <el-form-item prop="password">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+          placeholder="Password"
+          name="password"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
+      </el-form-item>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <span>
+        <el-link href="/" style="float: right">Back to login</el-link>
+      </span>
     </el-form>
   </div>
 </template>
@@ -84,9 +66,7 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined,
-      activeName: 'first',
-      registration_type: ''
+      redirect: undefined
     }
   },
   watch: {

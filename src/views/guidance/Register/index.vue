@@ -12,9 +12,15 @@
         <div class="title-container">
           <div class="logo" style="text-align: center">
             <img width="60%" src="@/assets/guidance/logo.png">
-            <h1>LOGIN</h1>
+            <h1>REGISTER</h1>
           </div>
         </div>
+        <br>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane name="student" label="Student" />
+          <el-tab-pane name="teacher" label="Teacher" />
+          <el-tab-pane name="guidance" label="Guidance" />
+        </el-tabs>
         <el-form-item prop="username">
           <span class="svg-container">
             <svg-icon icon-class="user" />
@@ -51,8 +57,7 @@
         </el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
         <span>
-          <el-link href="/register" style="float: left">Create new account</el-link>
-          <el-link style="float: right">Forgot password</el-link>
+          <el-link href="/" style="float: right">Back to login</el-link>
         </span>
         <div style="margin-top: 20%; font-size: 14px">
           <div>Republic of the Philippines</div>
@@ -98,6 +103,11 @@ export default {
     }
   },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab.label)
+      this.registration_type = tab.label
+      console.log(this.registration_type)
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''

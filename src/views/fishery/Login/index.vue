@@ -1,9 +1,10 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
       <div class="title-container">
-        <h3 class="title">fish Login Form</h3>
+        <div class="logo">
+          <img width="100%" src="@/assets/fishery/fishery.png">
+        </div>
       </div>
 
       <el-form-item prop="username">
@@ -40,8 +41,11 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <span>
+        <el-link href="/register" style="float: left">Create new account</el-link>
+        <el-link style="float: right">Forgot password</el-link>
+      </span>
     </el-form>
   </div>
 </template>
@@ -121,12 +125,6 @@ $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
-
 /* reset element-ui css */
 .login-container {
   .el-input {
@@ -140,7 +138,7 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: black;
       height: 47px;
       caret-color: $cursor;
 
@@ -161,7 +159,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#fff;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
@@ -173,9 +171,9 @@ $light_gray:#eee;
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 500px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 100px 35px 0;
     margin: 0 auto;
     overflow: hidden;
   }
