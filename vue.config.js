@@ -4,7 +4,7 @@ const gql = process.env.VUE_APP_GRAPHQL_HTTP
 const variables = `@import "@/styles/variables.scss";`
 const theme = `@import "@/styles/${clientTheme}/client-themes.scss";`
 module.exports = {
-  publicPath: '/',
+  publicPath: '',
   outputDir: 'dist',
   css: {
     loaderOptions: {
@@ -14,6 +14,7 @@ module.exports = {
     }
   },
   devServer: {
-    proxy: gql
+    port: 9528,
+    proxy: 'https://system-core.herokuapp.com/graphql'
   }
 }
