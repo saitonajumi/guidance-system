@@ -6,6 +6,7 @@ const theme = `@import "@/styles/${clientTheme}/client-themes.scss";`
 module.exports = {
   publicPath: '',
   outputDir: 'dist',
+  assetsDir: 'static',
   css: {
     loaderOptions: {
       sass: {
