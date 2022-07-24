@@ -15,6 +15,6 @@ module.exports = {
   },
   devServer: {
     port: 9528,
-    proxy: 'https://system-core.herokuapp.com/graphql'
+    proxy: gql
   }
 }
