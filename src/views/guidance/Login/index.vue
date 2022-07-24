@@ -19,6 +19,7 @@
           <span class="svg-container">
             <svg-icon icon-class="user" />
           </span>
+
           <el-input
             ref="username"
             v-model="loginForm.username"
