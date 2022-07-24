@@ -23,7 +23,8 @@ Vue.config.productionTip = false
 import VueApollo from 'vue-apollo'
 import { createProvider } from './vue-apollo'
 Vue.use(VueApollo)
-export default new Vue({
+
+new Vue({
   el: '#app',
   router,
   store,

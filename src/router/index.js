@@ -13,7 +13,6 @@ export const asyncRoutes = [
   ...clientModuleRoutes.router
 ]
 const createRouter = () => new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
   routes: constantRoutes
 })
