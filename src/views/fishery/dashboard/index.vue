@@ -8,8 +8,9 @@
             size="medium"
             class="filter-item"
             icon="el-icon-download"
-            :loading="printLoading">
-            Export as<i class="el-icon-arrow-down el-icon--right"></i>
+            :loading="printLoading"
+          >
+            Export as<i class="el-icon-arrow-down el-icon--right" />
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="xlsx">Excel</el-dropdown-item>
@@ -20,20 +21,22 @@
           style="margin-left: 1%; float: right;"
           size="medium"
           icon="el-icon-plus"
-          @click="addNewRecord">
+          @click="addNewRecord"
+        >
           Add New Record
         </el-button>
         <div style="float: right;">
           <el-row>
             <el-col :span="16"><div class="grid-content bg-purple">
-              <el-input size="medium" placeholder="search here" v-model="searchValue" class="input-with-select" @keyup.enter.native="handleSearch"></el-input>
+              <el-input v-model="searchValue" size="medium" placeholder="search here" class="input-with-select" @keyup.enter.native="handleSearch" />
             </div></el-col>
             <el-col :span="4"><div class="grid-content bg-purple-light">
               <el-button
-                @click="handleSearch"
-                size="medium"
                 slot="append"
-                icon="el-icon-search">Search
+                size="medium"
+                icon="el-icon-search"
+                @click="handleSearch"
+              >Search
               </el-button>
             </div></el-col>
           </el-row>
@@ -44,57 +47,63 @@
         :total="total"
         :page.sync="query.page"
         :limit.sync="query.first"
-        @pagination="get"/>
+        @pagination="get"
+      />
       <el-table
+        v-loading="tableLoading"
         :header-cell-style="{ background: '#7c96a6', color: 'white' }"
         style="width: 100%"
         stripe
         border
         fit
         :data="allUsersData"
-        v-loading="tableLoading"
-        height="650">
+        height="650"
+      >
         <el-table-column
           prop="id"
           type="index"
           label="#"
           :index="indexMethod"
           width="50"
-          align="center">
-        </el-table-column>
+          align="center"
+        />
         <el-table-column
           label="Name"
-          width="auto">
+          width="auto"
+        >
           <template slot-scope="{row}">
             {{ row.name }}
           </template>
         </el-table-column>
         <el-table-column
           label="Email"
-          width="auto">
+          width="auto"
+        >
           <template slot-scope="{row}">
             {{ row.email }}
           </template>
         </el-table-column>
         <el-table-column
           label="Status"
-          width="200">
+          width="200"
+        >
           <template slot-scope="{row}">
             <div style="text-align: center">
               <el-tag v-if="row.status === 'P'" stype="success">Approved</el-tag>
               <el-tag v-else-if="row.status === 'W'">Review</el-tag>
               <el-tag v-else-if="row.status === 'D'" type="danger">Denied</el-tag>
-              <el-tag style="width: 100%" v-else stype="success">Open</el-tag>
+              <el-tag v-else style="width: 100%" stype="success">Open</el-tag>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           label="Actions"
-          width="150">
+          width="150"
+        >
           <template slot-scope="{row}">
             <span>
-              <el-button class="btn-update" icon="el-icon-edit" circle @click="updateRecord(row)"></el-button>
-              <el-button class="btn-danger" icon="el-icon-delete" circle @click="openDeleteQuestion(row)"></el-button>
+              <el-button class="btn-update" icon="el-icon-edit" circle @click="updateRecord(row)" />
+              <el-button class="btn-danger" icon="el-icon-delete" circle @click="openDeleteQuestion(row)" />
             </span>
           </template>
         </el-table-column>
@@ -105,15 +114,17 @@
           :total="total"
           :page.sync="query.page"
           :limit.sync="query.first"
-          @pagination="get"/>
+          @pagination="get"
+        />
       </div>
     </el-card>
     <call-out-form
+      :form-visible="formVisible"
+      :form-types="formTypes"
+      :form-type="formType"
+      :form-data="formData"
       @formSuccess="get"
-      :formVisible="formVisible"
-      :formTypes="formTypes"
-      :formType="formType"
-      :formData="formData"/>
+    />
   </div>
 </template>
 
@@ -154,15 +165,15 @@ export default {
       allUsersData: []
     }
   },
-  mounted() {
-    this.get()
-  },
   watch: {
     searchValue: function() {
       if (this.searchValue === '') {
         this.handleSearch()
       }
     }
+  },
+  mounted() {
+    this.get()
   },
   methods: {
     get() {

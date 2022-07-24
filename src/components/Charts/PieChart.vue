@@ -34,16 +34,16 @@ export default {
       default: '370px'
     }
   },
-  data () {
+  data() {
     return {
       pieChart: null,
       data: []
     }
   },
-  mounted () {
+  mounted() {
     this.initChart()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     if (!this.pieChart) {
       return
     }
@@ -51,7 +51,7 @@ export default {
     this.pieChart = null
   },
   methods: {
-    initChart () {
+    initChart() {
       this.pieChart = echarts.init(document.getElementById(this.id))
       this.pieChart.setOption({
         title: [

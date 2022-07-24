@@ -10,8 +10,8 @@
 
 <script>
 export default {
-  mounted () {
-    let params = this.$route.query
+  mounted() {
+    const params = this.$route.query
     if (params.token) {
       this.$store
         .dispatch('user/loginSocial', { access_token: this.$route.query.token })

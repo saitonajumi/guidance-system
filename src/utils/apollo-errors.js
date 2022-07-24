@@ -1,10 +1,10 @@
 /** @namespace data.extensions.validation */
 /** @namespace data.debugMessage */
-export function apolloErrors (response, callback) {
+export function apolloErrors(response, callback) {
   const error = { response }.response.graphQLErrors
 
   if (Array.isArray(error)) {
-    error.forEach(function (data) {
+    error.forEach(function(data) {
       const debugMessage = data.debugMessage
       const validation = data.extensions.validation
       const message = data.message
@@ -17,9 +17,9 @@ export function apolloErrors (response, callback) {
         if (typeof message === 'object') {
           let displayMessage = '<div>'
 
-          Object.keys(message).forEach(function (key) {
+          Object.keys(message).forEach(function(key) {
             if (Array.isArray(message[key])) {
-              message[key].forEach(function (value) {
+              message[key].forEach(function(value) {
                 displayMessage += message[key] + '<br>'
               })
             } else {

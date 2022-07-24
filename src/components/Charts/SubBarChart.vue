@@ -34,16 +34,16 @@ export default {
       default: '400px'
     }
   },
-  data () {
+  data() {
     return {
       barChart: null,
       component: ''
     }
   },
-  mounted () {
+  mounted() {
     this.initChart()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     if (!this.barChart) {
       return
     }
@@ -51,7 +51,7 @@ export default {
     this.barChart = null
   },
   methods: {
-    initChart () {
+    initChart() {
       this.barChart = echarts.init(document.getElementById(this.id))
       this.barChart.setOption({
         tooltip: {

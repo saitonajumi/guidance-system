@@ -7,9 +7,9 @@
             <!-- Check that the SDK client is not currently loading before accessing is methods -->
             <div v-if="!this.$auth.loading">
               <!-- show login when not authenticated -->
-              <a v-if="!this.$auth.isAuthenticated" @click="loginAuth0" class="button is-dark"><strong>Sign in</strong></a>
+              <a v-if="!this.$auth.isAuthenticated" class="button is-dark" @click="loginAuth0"><strong>Sign in</strong></a>
               <!-- show logout when authenticated -->
-              <a v-if="this.$auth.isAuthenticated" @click="logoutAuth0" class="button is-dark"><strong>Log out</strong></a>
+              <a v-if="this.$auth.isAuthenticated" class="button is-dark" @click="logoutAuth0"><strong>Log out</strong></a>
             </div>
           </div>
         </div>
@@ -21,10 +21,10 @@
 export default {
   name: 'Nav',
   methods: {
-    loginAuth0 () {
+    loginAuth0() {
       this.$auth.loginWithRedirect()
     },
-    logoutAuth0 () {
+    logoutAuth0() {
       this.$auth.logout({
         returnTo: window.location.origin
       })

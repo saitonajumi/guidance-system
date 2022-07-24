@@ -7,8 +7,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <div class="block" v-for="size in sizeList" :key="size">
-            <el-avatar :size="size" :src="circleUrl"></el-avatar>
+          <div v-for="size in sizeList" :key="size" class="block">
+            <el-avatar :size="size" :src="circleUrl" />
           </div>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -32,17 +32,17 @@ export default {
     Breadcrumb,
     Hamburger
   },
-  computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
-  },
   data() {
     return {
       circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       sizeList: ['large']
     }
+  },
+  computed: {
+    ...mapGetters([
+      'sidebar',
+      'avatar'
+    ])
   },
   methods: {
     toggleSideBar() {
